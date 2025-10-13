@@ -1,7 +1,7 @@
 package orderservice.filter.specifications;
 
 import jakarta.persistence.criteria.Predicate;
-import orderservice.data.Order;
+import orderservice.data.Reservation;
 import orderservice.filter.OrderFilter;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -10,7 +10,7 @@ import java.util.List;
 
 
 public class OrderSpecifications {
-    public static Specification<Order> withFilters(OrderFilter filter) {
+    public static Specification<Reservation> withFilters(OrderFilter filter) {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 

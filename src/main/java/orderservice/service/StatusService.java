@@ -1,7 +1,7 @@
 package orderservice.service;
 
 import lombok.RequiredArgsConstructor;
-import orderservice.data.Order;
+import orderservice.data.Reservation;
 import orderservice.data.Status;
 import orderservice.data.StatusHistory;
 import orderservice.repository.OrderRepository;
@@ -23,7 +23,7 @@ public class StatusService {
     }
 
     public void changeOrderStatus(UUID id, String status) {
-        Order order = orderRepository.findById(id).orElse(null);
+        Reservation order = orderRepository.findById(id).orElse(null);
         assert order != null;
         order.setStatus(Status.valueOf(status));
         StatusHistory statusHistory = new StatusHistory();

@@ -1,7 +1,7 @@
 package orderservice.service;
 
 import lombok.RequiredArgsConstructor;
-import orderservice.data.Order;
+import orderservice.data.Reservation;
 import orderservice.filter.OrderFilter;
 import orderservice.filter.specifications.OrderSpecifications;
 import orderservice.repository.OrderRepository;
@@ -16,8 +16,8 @@ public class FilterService {
 
     private final OrderRepository orderRepository;
 
-    public Page<Order> findAllWithFilters(OrderFilter orderFilter, Pageable pageable) {
-        Specification<Order> spec = OrderSpecifications.withFilters(orderFilter);
+    public Page<Reservation> findAllWithFilters(OrderFilter orderFilter, Pageable pageable) {
+        Specification<Reservation> spec = OrderSpecifications.withFilters(orderFilter);
         return orderRepository.findAll(spec, pageable);
     }
 }

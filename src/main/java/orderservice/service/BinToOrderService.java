@@ -2,7 +2,7 @@ package orderservice.service;
 
 import lombok.RequiredArgsConstructor;
 import orderservice.data.Meal;
-import orderservice.data.Order;
+import orderservice.data.Reservation;
 import orderservice.repository.OrderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,18 +27,18 @@ public class BinToOrderService {
     }
 
     @KafkaListener(topics = "order-topic", groupId = "order")
-    public void consumeOrder(Order order) {
+    public void consumeOrder(Reservation order) {
         logger.info("Received order: {}", order);
         processOrder(order);
     }
 
 
-    private void processOrder(Order order) {
+    private void processOrder(Reservation order) {
         order.setPrice(priceCounter(order));
         orderRepository.save(order);
     }
 
-    private Double priceCounter(Order order) {
+    private Double priceCounter(Reservation order) {
         double price = 0.0;
         for (Meal meal : order.getMeals()) {
             price += meal.getPrice();

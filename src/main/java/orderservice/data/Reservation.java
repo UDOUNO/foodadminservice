@@ -12,9 +12,9 @@ import java.util.UUID;
 @Entity
 @Data
 @RequiredArgsConstructor
-public class Order {
+public class Reservation {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     @NotNull
     private UUID clientId;

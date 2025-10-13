@@ -1,7 +1,7 @@
 package orderservice.controller;
 
 import lombok.RequiredArgsConstructor;
-import orderservice.data.Order;
+import orderservice.data.Reservation;
 import orderservice.data.Status;
 import orderservice.data.StatusHistory;
 import orderservice.service.FilterService;
@@ -24,22 +24,22 @@ public class OrderController {
     private final FilterService filterService;
 
     @GetMapping("/order/find-by/{orderId}")
-    public Order findById(@PathVariable UUID orderId) {
+    public Reservation findById(@PathVariable UUID orderId) {
         return orderService.findById(orderId);
     }
 
     @GetMapping("/order/find-by-operator/{operatorId}")
-    public Page<Order> findOrderByOperatorId(@PathVariable UUID operatorId,@PageableDefault(size = 20) Pageable pageable) {
+    public Page<Reservation> findOrderByOperatorId(@PathVariable UUID operatorId,@PageableDefault(size = 20) Pageable pageable) {
         return orderService.findByOperatorId(operatorId, pageable);
     }
 
     @GetMapping("/order/find-without-operator")
-    public Page<Order> findOrderByOperatorId(@PageableDefault(size = 20) Pageable pageable) {
+    public Page<Reservation> findOrderByOperatorId(@PageableDefault(size = 20) Pageable pageable) {
         return orderService.findWithoutOperator(pageable);
     }
 
     @PostMapping("/order/create")
-    public void createOrder(@RequestBody Order order) {
+    public void createOrder(@RequestBody Reservation order) {
         orderService.save(order);
     }
 
