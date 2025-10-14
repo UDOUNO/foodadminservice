@@ -1,9 +1,12 @@
 package orderservice.controller;
 
 import lombok.RequiredArgsConstructor;
+import orderservice.data.OperatorOrderAmount;
 import orderservice.data.Reservation;
 import orderservice.data.Status;
 import orderservice.data.StatusHistory;
+import orderservice.filter.OrderFilter;
+import orderservice.service.AmountService;
 import orderservice.service.FilterService;
 import orderservice.service.OrderService;
 import orderservice.service.StatusService;
@@ -22,6 +25,7 @@ public class OrderController {
     private final OrderService orderService;
     private final StatusService statusService;
     private final FilterService filterService;
+    private final AmountService amountService;
 
     @GetMapping("/order/find-by/{orderId}")
     public Reservation findById(@PathVariable UUID orderId) {
@@ -51,11 +55,17 @@ public class OrderController {
     @PutMapping("/order/change-operator-for-order")
     public void changeOperatorForOrder(@RequestParam UUID orderId, @RequestParam UUID operatorId) {
         orderService.changeOperatorId(orderId, operatorId);
+        amountService.changeAmount(operatorId);
     }
 
     @GetMapping("/order/stat/{operatorId}")
-    public Long getStat(@PathVariable UUID operatorId) {
+    public Long getStatByOperatorId(@PathVariable UUID operatorId) {
         return orderService.getStat(operatorId);
+    }
+
+    @GetMapping("/order/stat/all")
+    public List<OperatorOrderAmount> getStatAll() {
+        return amountService.getOperatorOrderAmounts();
     }
 
     @PutMapping("/order/comment/{orderId}")
@@ -73,4 +83,11 @@ public class OrderController {
         statusService.changeOrderStatus(orderId, Status.CANCELED.name());
         orderService.setDeclineReason(orderId, declineReason);
     }
+
+    @GetMapping("/order/get-with-filters")
+    public Page<Reservation> getWithFilters(@RequestParam OrderFilter orderFilter, Pageable pageable) {
+        return filterService.findAllWithFilters(orderFilter, pageable);
+    }
+
+
 }
