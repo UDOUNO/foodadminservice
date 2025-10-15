@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,8 +29,16 @@ public class Reservation {
     private double price;
     private String declineReason;
     private UUID operatorId;
+    private LocalDate date;
     private Status status;
     private PayWay payWay;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Meal> meals;
+
+    @PrePersist
+    public void setDefaultValues() {
+        if (date == null) {
+            date = LocalDate.now();
+        }
+    }
 }

@@ -40,7 +40,7 @@ public class OrderController {
     }
 
     @GetMapping("/order/find-without-operator")
-    public Page<Reservation> findOrderByOperatorId(@PageableDefault(size = 20) Pageable pageable) {
+    public Page<Reservation> findOrderWithoutOperatorId(@PageableDefault(size = 20) Pageable pageable) {
         return orderService.findWithoutOperator(pageable);
     }
 
