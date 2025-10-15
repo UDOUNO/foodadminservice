@@ -1,35 +1,29 @@
-package orderservice.data;
+package orderservice.dto;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import orderservice.data.Meal;
+import orderservice.data.PayWay;
+import orderservice.data.Status;
 
 import java.util.List;
 import java.util.UUID;
 
-@Entity
 @Data
-@Builder
 @AllArgsConstructor
-@NoArgsConstructor
-public class Reservation {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
-    @NotNull
+public class OrderDto {
     private UUID clientId;
-    @NotBlank
     private String address;
-    @NotBlank
     private String phoneNumber;
     private String comment;
-    @NotNull
     private double price;
     private String declineReason;
     private UUID operatorId;
     private Status status;
     private PayWay payWay;
-    @OneToMany(cascade = CascadeType.ALL)
     private List<Meal> meals;
 }

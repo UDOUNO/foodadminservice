@@ -5,7 +5,9 @@ import orderservice.data.OperatorOrderAmount;
 import orderservice.data.Reservation;
 import orderservice.data.Status;
 import orderservice.data.StatusHistory;
+import orderservice.dto.OrderDto;
 import orderservice.filter.OrderFilter;
+import orderservice.mapper.OrderMapper;
 import orderservice.service.AmountService;
 import orderservice.service.FilterService;
 import orderservice.service.OrderService;
@@ -43,8 +45,8 @@ public class OrderController {
     }
 
     @PostMapping("/order/create")
-    public void createOrder(@RequestBody Reservation order) {
-        orderService.save(order);
+    public void createOrder(@RequestBody OrderDto order) {
+        orderService.save(OrderMapper.mapOrderDtoToOrder(order));
     }
 
     @PutMapping("/order/change-order-status/{orderId}")
