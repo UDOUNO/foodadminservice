@@ -34,6 +34,11 @@ public class OrderController {
         return orderService.findById(orderId);
     }
 
+    @GetMapping("/order/find-by-userId/{userId}")
+    public List<Reservation> findByUserId(@PathVariable UUID userId) {
+        return orderService.findByUserId(userId);
+    }
+
     @GetMapping("/order/find-by-operator/{operatorId}")
     public Page<Reservation> findOrderByOperatorId(@PathVariable UUID operatorId,@PageableDefault(size = 20) Pageable pageable) {
         return orderService.findByOperatorId(operatorId, pageable);
