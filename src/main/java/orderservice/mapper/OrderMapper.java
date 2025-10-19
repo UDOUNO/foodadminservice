@@ -1,20 +1,20 @@
 package orderservice.mapper;
 
+import orderservice.data.PayWay;
 import orderservice.data.Reservation;
+import orderservice.data.Status;
 import orderservice.dto.OrderDto;
 
 public class OrderMapper {
     public static Reservation mapOrderDtoToOrder(OrderDto order) {
         return Reservation.builder()
-                .operatorId(order.getOperatorId())
-                .status(order.getStatus())
-                .payWay(order.getPayWay())
-                .meals(order.getMeals())
-                .clientId(order.getClientId())
+                .status(Status.COOKING)
+                .payWay(PayWay.valueOf(order.getPaymentMethod()))
+                .meals(order.getItems())
+                .price(order.getTotal())
+                .clientId(order.getUserId())
                 .phoneNumber(order.getPhoneNumber())
                 .comment(order.getComment())
-                .declineReason(order.getDeclineReason())
-                .price(order.getPrice())
                 .address(order.getAddress())
                 .build();
     }
